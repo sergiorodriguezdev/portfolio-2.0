@@ -1,0 +1,11 @@
+.card-img-custom {
+        /* Force width and height to fill box based on values specified in .large-card and .card selectors */
+        width: 100%;
+        height: 100%;
+        /* max-width: 300px;
+        max-height: 300px; */
+        /* This makes the image look stretched and cropped */
+        object-fit: cover;
+        /*filter: opacity(0.3);*/ /* Make the image look opaque */
+        transition: 1.5s; /* Required for hover animation */
+}
