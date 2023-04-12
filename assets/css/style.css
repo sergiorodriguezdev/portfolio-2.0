@@ -9,3 +9,7 @@
         /*filter: opacity(0.3);*/ /* Make the image look opaque */
         transition: 1.5s; /* Required for hover animation */
 }
+
+.card:hover {
+        
+}
