@@ -2,31 +2,31 @@
   {
     "id": 604380778,
     "friendly_name": "Code Refactor",
-    "project_description":  ""
+    "project_description":  "Description for project 604380778"
   },
     {
     "id": 608014287,
     "friendly_name": "Portfolio v1",
-    "project_description":  ""
+    "project_description":  "Description for project 608014287"
   },
     {
     "id": 611512170,
     "friendly_name": "Password Generator",
-    "project_description":  ""
+    "project_description":  "Description for project 611512170"
   },
     {
     "id": 614113443,
     "friendly_name": "Code Quiz",
-    "project_description":  ""
+    "project_description":  "Description for project 614113443"
   },
     {
     "id": 617164021,
     "friendly_name": "Work Day Scheduler",
-    "project_description":  ""
+    "project_description":  "Description for project 617164021"
   },
     {
     "id": 620517309,
     "friendly_name": "Weather Dashboard",
-    "project_description":  ""
+    "project_description":  "Description for project 620517309"
   }
 ]
