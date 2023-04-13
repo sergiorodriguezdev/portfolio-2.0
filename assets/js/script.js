@@ -108,21 +108,27 @@ projectDetailsModal.addEventListener("show.bs.modal", (event) => {
 });
 
 function init() {
-    // getRepoData();
+    getRepoData();
 
-    portfolioData = JSON.parse(localStorage.getItem("portfolio-data"));
-    renderPortfolio();
+    // portfolioData = JSON.parse(localStorage.getItem("portfolio-data"));
+
+    // can this be improved...?
+    var timerIndex = setTimeout(() => {
+        // console.log(portfolioData)
+        // renderPortfolio();
+    }, 2000);
 }
 
 async function getRepoData() {
 
     // Fetch all my GH repos
-    myGhRepos = await fetchGithubData(githubReposUrl);
-    
+    myGhRepos = await (fetchGithubData(githubReposUrl));
+
     // Filter out repos to build portfolio dataset
     portfolioData = myGhRepos.filter((el) => {
         return el.has_pages && el.homepage && el.name !== "portfolio-2.0";
     });
+    
 
     // TO DO: fetch repo metadata (?) - unsure how I'm going to do this...
     var portfolioMetadata = await (fetchGithubData(portfolioMetadataUrl));
@@ -133,7 +139,7 @@ async function getRepoData() {
     //  fetch screenshots stored in README-assets folder
     for(const item of portfolioData) {
         var screenshotFolderUrl = githubFolderUrl.replace("{repositoryName}", item.name);
-        var screenshots = await fetchGithubData(screenshotFolderUrl);
+        var screenshots = await (fetchGithubData(screenshotFolderUrl));
 
         if (screenshots !== null) {
             item.screenshots = [];
@@ -149,10 +155,14 @@ async function getRepoData() {
         item.portfolio_metadata = portfolioMetadata.filter((element) => element.id === item.id)[0];
     }
 
-    localStorage.setItem("portfolio-data", JSON.stringify(portfolioData));
+    renderPortfolio();
+    // localStorage.setItem("portfolio-data", JSON.stringify(portfolioData));
 }
 
 function renderPortfolio() {
+
+    var loadingSpinner = document.getElementById("loading-spinner");
+    loadingSpinner.remove();
 
     for(const item of portfolioData) {
 
@@ -199,7 +209,7 @@ function renderPortfolio() {
     
         var repoName = document.createElement("small");
         repoName.classList.add("text-body-secondary");
-        repoName.textContent = ` ${item.name}`;
+        repoName.textContent = ` ${item.portfolio_metadata.friendly_name}`;
 
         var btnGroup = document.createElement("div");
         btnGroup.classList.add("btn-group");
@@ -274,13 +284,15 @@ function renderPortfolio() {
 async function fetchGithubData(url) {
     try {
         var response = await fetch(url, {
-            // cache: "force-cache", // force cache
+            cache: "force-cache", // force cache
             headers: {
                 "Authorization": "Bearer " + whatisthis,
                 "X-GitHub-Api-Version": "2022-11-28"
             }
         });
+        
         if (!response.ok) {return null}
+
         var data = await response.json();
     } catch (error) {
         console.error(error);

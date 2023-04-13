@@ -32,3 +32,18 @@
         transform: translate(-50%, -50%);
         /* text-align: center; */
 }
+
+/* loading spinner size */
+#loading-spinner .spinner-border {
+        width: 5rem;
+        height: 5rem;
+}
+
+/* 
+.nav-link:hover .nav-link-text {
+        text-decoration: underline;
+}
+
+.nav-link.active .nav-link-text {
+        text-decoration: underline;
+} */
