@@ -3,11 +3,109 @@ const githubScreenshotFolder = `README-assets`
 const githubReposUrl = `https://api.github.com/users/${githubUsername}/repos`
 const githubFolderUrl = `https://api.github.com/repos/${githubUsername}/{repositoryName}/contents/${githubScreenshotFolder}/`
 const whatisthis = `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` // fix this!
+const portfolioMetadataUrl = `https://api.github.com/repos/sergiorodriguezdev/portfolio-2.0/contents/assets/portfolio-metadata.json?ref=main`;
 
 var myGhRepos = [];
 var portfolioData = [];
 
 var portfolioDataDiv = document.querySelector("#portfolio-data .row");
+var projectDetailsModal = document.getElementById("project-details-modal");
+
+// Populate modal
+projectDetailsModal.addEventListener("show.bs.modal", (event) => {
+    event.stopPropagation();
+    
+    // relatedTarget = link/button that opened modal
+    // find closest card element (div ancestor)
+    var card = event.relatedTarget.closest(".card");
+
+    var findProject = function(arr, repoId) {
+        return (arr.filter((item) => item.id === repoId))[0]; // This should only return one result
+    };
+
+    var project = findProject(portfolioData, parseInt(card.dataset.repoId));
+    
+    var projectName = document.getElementById("project-name");
+    projectName.textContent = project.portfolio_metadata.friendly_name;
+
+    var projectGithubLink = document.getElementById("project-github-link");
+    projectGithubLink.setAttribute("href", project.html_url);
+
+    var projectAppLink = document.getElementById("project-app-link");
+    projectAppLink.setAttribute("href", project.homepage);
+
+    var screenshotsCollapsibleBtn = document.querySelector(".accordion-button");
+    screenshotsCollapsibleBtn.classList.add("collapsed");
+
+    var screenshotCollapsibleBody = document.querySelector(".accordion-collapse");
+    screenshotCollapsibleBody.classList.remove("show");
+
+    var projectScreenshotCarousel = document.getElementById("project-screenshot-carousel-inner");
+
+    // delete div child elements from carousel div element
+    while(projectScreenshotCarousel.firstChild) projectScreenshotCarousel.removeChild(projectScreenshotCarousel.lastChild);
+
+    if(!project.screenshots || project.screenshots.length === 0) {
+        var carouselItem = document.createElement("div");
+        carouselItem.classList.add("carousel-item");
+
+        var projectScreenshot = document.createElement("img");
+        projectScreenshot.setAttribute("src", "./assets/images/portfolio-placeholder.png");
+        projectScreenshot.setAttribute("alt", "portfolio-placeholder");
+        projectScreenshot.classList.add("d-block");
+        projectScreenshot.classList.add("w-100");
+
+        carouselItem.append(projectScreenshot);
+
+        projectScreenshotCarousel.append(carouselItem);
+    } else {
+        for (const screenshot of project.screenshots) {
+            var carouselItem = document.createElement("div");
+            carouselItem.classList.add("carousel-item");
+
+            var projectScreenshot = document.createElement("img");
+            projectScreenshot.setAttribute("src", screenshot.download_url);
+            projectScreenshot.setAttribute("alt", screenshot.name.replace(".png", ""));
+            projectScreenshot.classList.add("d-block");
+            projectScreenshot.classList.add("w-100");
+
+            carouselItem.append(projectScreenshot);
+
+            projectScreenshotCarousel.append(carouselItem);
+        }
+    }
+
+    // set the first carousel item as active (per bootstrap's example)
+    projectScreenshotCarousel.firstChild.classList.add("active");
+
+    var carouselPrevBtn = document.querySelector(".carousel-control-prev");
+    var carouselNextBtn = document.querySelector(".carousel-control-next");
+    
+    // hide carousel navigation buttons
+    if(projectScreenshotCarousel.children.length > 1) {
+        carouselPrevBtn.classList.remove("visually-hidden");
+        carouselNextBtn.classList.remove("visually-hidden");
+    } else {
+        carouselPrevBtn.classList.add("visually-hidden");
+        carouselNextBtn.classList.add("visually-hidden");
+    }
+
+    var projectDescription = document.getElementById("project-description");
+    projectDescription.textContent = project.portfolio_metadata.project_description;
+
+    var projectTopics = document.getElementById("project-topics")
+
+    // delete li child elements from ul element
+    while(projectTopics.firstChild) projectTopics.removeChild(projectTopics.lastChild);
+
+    for (const topic of project.topics) {
+        var liEl = document.createElement("li");
+        liEl.classList.add("list-group-item");
+        liEl.textContent = topic;
+
+        projectTopics.append(liEl);
+    }
+});
 
 function init() {
     // getRepoData();
@@ -25,6 +123,11 @@ async function getRepoData() {
     portfolioData = myGhRepos.filter((el) => {
         return el.has_pages && el.homepage && el.name !== "portfolio-2.0";
     });
+
+    // TO DO: fetch repo metadata (?) - unsure how I'm going to do this...
+    var portfolioMetadata = await (fetchGithubData(portfolioMetadataUrl));
+    portfolioMetadata = atob(portfolioMetadata.content); //base64
+    portfolioMetadata = JSON.parse(portfolioMetadata);
    
     // For each "portfolio-worthy" repo,
     //  fetch screenshots stored in README-assets folder
@@ -42,8 +145,8 @@ async function getRepoData() {
             }
         }
 
-        // TO DO: fetch repo metadata (?) - unsure how I'm going to do this...
-
+        // add portfolio metadata to main dataset
+        item.portfolio_metadata = portfolioMetadata.filter((element) => element.id === item.id)[0];
     }
 
     localStorage.setItem("portfolio-data", JSON.stringify(portfolioData));
@@ -59,10 +162,14 @@ function renderPortfolio() {
         var card = document.createElement("div");
         card.classList.add("card");
         card.classList.add("h-100");
+        card.dataset.repoId = item.id;
+
+        var cardBody = document.createElement("div");
+        cardBody.classList.add("card-body");
+        cardBody.classList.add("text-center");
 
         var image = document.createElement("img");
         image.style.objectFit = "cover";
-        // image.style.opacity = "0.7";
         image.classList.add("img-thumbnail");
         image.classList.add("h-100");
 
@@ -72,11 +179,20 @@ function renderPortfolio() {
             image.setAttribute("src", "./assets/images/portfolio-placeholder.png");
         }
 
-        var cardBody = document.createElement("div");
-        cardBody.classList.add("card-body");
-        cardBody.classList.add("text-center");
+        var modalOverlayLink = document.createElement("a");
+        modalOverlayLink.setAttribute("data-bs-toggle", "modal");
+        modalOverlayLink.setAttribute("data-bs-target", "#project-details-modal");
+        modalOverlayLink.classList.add("modal-link");
+
+        var iconOpenModal = document.createElement("i");
+        iconOpenModal.setAttribute("id", "modal-icon");
+        iconOpenModal.classList.add("bi");
+        iconOpenModal.classList.add("bi-box-arrow-up-right");
+
+        modalOverlayLink.append(iconOpenModal);
 
         cardBody.append(image);
+        cardBody.append(modalOverlayLink);
 
         var cardFooter = document.createElement("div");
         cardFooter.classList.add("card-footer");
@@ -118,8 +234,6 @@ function renderPortfolio() {
         iconRocketLaunch.classList.add("bi-rocket-takeoff-fill");
 
         var linkDetails = document.createElement("a");
-        linkDetails.setAttribute("href", "");
-        linkDetails.setAttribute("target", "_blank");
         linkDetails.setAttribute("data-bs-toggle", "tooltip");
         linkDetails.setAttribute("data-bs-title", "View Project Details");
         linkDetails.classList.add("btn");
@@ -135,9 +249,15 @@ function renderPortfolio() {
         linkApp.append(iconRocketLaunch);
         linkDetails.append(iconOpenModal);
 
+        var modalSpan = document.createElement("span");
+        modalSpan.setAttribute("data-bs-toggle", "modal");
+        modalSpan.setAttribute("data-bs-target", "#project-details-modal");
+
+        modalSpan.append(linkDetails);
+
         btnGroup.append(linkGitHub);
         btnGroup.append(linkApp);
-        btnGroup.append(linkDetails);
+        btnGroup.append(modalSpan);
     
         cardFooter.append(repoName);
         cardFooter.append(document.createElement("br"));
@@ -154,7 +274,7 @@ function renderPortfolio() {
 async function fetchGithubData(url) {
     try {
         var response = await fetch(url, {
-            cache: "force-cache", // force cache
+            // cache: "force-cache", // force cache
             headers: {
                 "Authorization": "Bearer " + whatisthis,
                 "X-GitHub-Api-Version": "2022-11-28"

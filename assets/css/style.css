@@ -1,15 +1,34 @@
-.card-img-custom {
-        /* Force width and height to fill box based on values specified in .large-card and .card selectors */
-        width: 100%;
-        height: 100%;
-        /* max-width: 300px;
-        max-height: 300px; */
-        /* This makes the image look stretched and cropped */
-        object-fit: cover;
-        /*filter: opacity(0.3);*/ /* Make the image look opaque */
-        transition: 1.5s; /* Required for hover animation */
+/* Code below taken from: */
+/* https://www.w3schools.com/howto/howto_css_image_overlay.asp */
+/* I adjusted it to fit my project */
+.card-body {
+        position: relative;
+        width: auto;
 }
 
-.card:hover {
-        
+.modal-link {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 100%;
+        width: 100%;
+        opacity: 0;
+        transition: .5s ease;
+        background-color: black;
+}
+
+.card-body:hover .modal-link {
+        opacity: 0.75;
+}
+
+#modal-icon {
+        color: white;
+        font-size: xxx-large;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        /* text-align: center; */
 }
