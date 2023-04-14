@@ -90,19 +90,21 @@
   </header>
 
   <main>
-    <div class="tab-content">
-      <div class="tab-pane" id="about-me" role="tabpanel" aria-labelledby="home-tab" tabindex="0">
-        About Me
+    <div class="tab-content my-4">
+      <div class="tab-pane" id="about-me" role="tabpanel" aria-labelledby="about-me" tabindex="0">
+        <div>About Me</div>
       </div>
-      <div class="tab-pane active" id="portfolio" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">
+      <div class="tab-pane show active" id="portfolio" role="tabpanel" aria-labelledby="portfolio" tabindex="0">
         <div id="portfolio-wrapper" class="container">
           <!-- Row containing filters and main content -->
-          <div class="row my-4">
+          <div class="row">
             <!-- Column containing filters -->
-            <div class="col-12 col-lg-3">
+            <div class="col-12 col-lg-3 visually-hidden">
               <div class="card">
                 <div class="card-header">
                   <i class="bi bi-funnel-fill"></i> Filters
+                  <!-- <button class="btn btn-primary btn-sm">apply</button>
+                  <button class="btn btn-secondary btn-sm">clear</button> -->
                 </div>
                 <ul class="list-group list-group-flush">
                   <li class="list-group-item">
@@ -111,40 +113,75 @@
                       <input type="checkbox" class="btn-check" id="btncheck1" autocomplete="off">
                       <label class="btn btn-outline-primary btn-sm rounded-pill m-1" for="btncheck1">topic-1</label>
                       <input type="checkbox" class="btn-check" id="btncheck2" autocomplete="off">
-                      <label class="btn btn-outline-primary btn-sm rounded-pill m-1" for="btncheck2">long-topic-2</label>
+                      <label class="btn btn-outline-primary btn-sm rounded-pill m-1"
+                        for="btncheck2">long-topic-2</label>
                       <input type="checkbox" class="btn-check" id="btncheck3" autocomplete="off">
                       <label class="btn btn-outline-primary btn-sm rounded-pill m-1" for="btncheck3">tpc-3</label>
                       <input type="checkbox" class="btn-check" id="btncheck4" autocomplete="off">
-                      <label class="btn btn-outline-primary btn-sm rounded-pill m-1" for="btncheck4">very-long-topic-4</label>
+                      <label class="btn btn-outline-primary btn-sm rounded-pill m-1"
+                        for="btncheck4">very-long-topic-4</label>
                       <input type="checkbox" class="btn-check" id="btncheck5" autocomplete="off">
                       <label class="btn btn-outline-primary btn-sm rounded-pill m-1" for="btncheck5">topic-5</label>
                       <input type="checkbox" class="btn-check" id="btncheck6" autocomplete="off">
-                      <label class="btn btn-outline-primary btn-sm rounded-pill m-1" for="btncheck6">another-long-topic-6</label>
+                      <label class="btn btn-outline-primary btn-sm rounded-pill m-1"
+                        for="btncheck6">another-long-topic-6</label>
                     </div>
                   </li>
                 </ul>
+                <div class="card-footer">
+                  <!-- <button class="btn btn-primary btn-sm">apply</button>
+                  <button class="btn btn-secondary btn-sm">clear</button> -->
+                </div>
               </div>
             </div>
             <!-- Column containing main content -->
-            <div class="col-12 col-lg-9">
-              <div id="portfolio-data" class="container h-100">
-                <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-3 h-100">
-                  <div class="d-flex flex-column w-100 h-100 justify-content-center align-items-center"
-                    id="loading-spinner">
-                    <div class="spinner-border" role="status">
-                      <span class="visually-hidden">Loading...</span>
-                    </div>
-                    <span class="">Loading...</span>
+            <!-- <div class="col-12 col-lg-9"> -->
+            <div class="col-12"></div>
+            <div id="portfolio-data" class="container h-100">
+              <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-3 h-100">
+                <div class="d-flex flex-column w-100 h-100 justify-content-center align-items-center"
+                  id="loading-spinner">
+                  <div class="spinner-border" role="status">
+                    <span class="visually-hidden">Loading...</span>
                   </div>
+                  <span class="">Loading...</span>
                 </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-      <div class="tab-pane" id="v2-info" role="tabpanel" aria-labelledby="messages-tab" tabindex="0">
-        About this portfolio
+      <div class="tab-pane" id="v2-info" role="tabpanel" aria-labelledby="v2-info" tabindex="0">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-9">
+              <div class="card">
+                <div class="card-header">About Portfolio v2</div>
+                <div class="card-body" id="">
+                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Ratione fugit nesciunt sequi ipsa cum dicta
+                  nostrum labore quod unde accusantium qui, voluptates laborum, incidunt minus corrupti quaerat beatae
+                  fuga eveniet.
+                  Id a ducimus laboriosam explicabo fuga accusantium quaerat, voluptate at eligendi. Natus velit rerum
+                  optio. Non, dolore. Ab fuga magni quod quo delectus? Dolorum dolores nobis qui, corrupti
+                  consequuntur nam!
+                  Necessitatibus veniam aperiam suscipit architecto tempore quisquam distinctio.
+                </div>
+              </div>
+            </div>
+            <div class="col-3">
+              <div class="card mb-5">
+                <div class="card-header">Topics</div>
+                <ul class="list-group list-group-flush" id="">
+                  <li class="list-group-item">CSS</li>
+                    <li class="list-group-item">JavaScript</li>
+                    <li class="list-group-item">A third item</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
+    </div>
     </div>
   </main>
 
@@ -168,9 +205,6 @@
         <div class="modal-body">
           <div class="container-fluid">
             <div class="row">
-              <!-- <div class="col-4">
-
-              </div> -->
               <div class="col-9">
                 <div class="card">
                   <div class="card-header">Description</div>

@@ -2,7 +2,8 @@ const githubUsername = `sergiorodriguezdev`
 const githubScreenshotFolder = `README-assets`
 const githubReposUrl = `https://api.github.com/users/${githubUsername}/repos`
 const githubFolderUrl = `https://api.github.com/repos/${githubUsername}/{repositoryName}/contents/${githubScreenshotFolder}/`
-const whatisthis = `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` // fix this!
+// const whatisthis = `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` // fix this!
+const whatisthis = `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`;
 const portfolioMetadataUrl = `https://api.github.com/repos/sergiorodriguezdev/portfolio-2.0/contents/assets/portfolio-metadata.json?ref=main`;
 
 var myGhRepos = [];
@@ -10,6 +11,17 @@ var portfolioData = [];
 
 var portfolioDataDiv = document.querySelector("#portfolio-data .row");
 var projectDetailsModal = document.getElementById("project-details-modal");
+
+// var easterEgg = document.querySelector(".btn.navbar-brand");
+// easterEgg.addEventListener("click", (event) => {
+//     var htmlEl = document.querySelector("html");
+//     console.log(htmlEl.getAttribute("data-bs-theme"))
+//     if(htmlEl.getAttribute("data-bs-theme") === "dark") {
+//         htmlEl.setAttribute("data-bs-theme", "light");
+//     } else {
+//         htmlEl.setAttribute("data-bs-theme", "dark");
+//     }
+// });
 
 // Populate modal
 projectDetailsModal.addEventListener("show.bs.modal", (event) => {
@@ -134,7 +146,8 @@ async function getRepoData() {
     var portfolioMetadata = await (fetchGithubData(portfolioMetadataUrl));
     portfolioMetadata = atob(portfolioMetadata.content); //base64
     portfolioMetadata = JSON.parse(portfolioMetadata);
-   
+    console.log(portfolioMetadata)
+    
     // For each "portfolio-worthy" repo,
     //  fetch screenshots stored in README-assets folder
     for(const item of portfolioData) {
@@ -152,7 +165,7 @@ async function getRepoData() {
         }
 
         // add portfolio metadata to main dataset
-        item.portfolio_metadata = portfolioMetadata.filter((element) => element.id === item.id)[0];
+        item.portfolio_metadata = portfolioMetadata.projects.filter((element) => element.id === item.id)[0];
     }
 
     renderPortfolio();
@@ -284,9 +297,9 @@ function renderPortfolio() {
 async function fetchGithubData(url) {
     try {
         var response = await fetch(url, {
-            cache: "force-cache", // force cache
+            // cache: "reload",
             headers: {
-                "Authorization": "Bearer " + whatisthis,
+                "Authorization": "token " + whatisthis,
                 "X-GitHub-Api-Version": "2022-11-28"
             }
         });
