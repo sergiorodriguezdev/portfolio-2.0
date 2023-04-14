@@ -1,32 +1,55 @@
-[
-  {
-    "id": 604380778,
-    "friendly_name": "Code Refactor",
-    "project_description":  "Description for project 604380778"
+{
+  "about-me": {
+    "description": 
+    ""
   },
-    {
-    "id": 608014287,
-    "friendly_name": "Portfolio v1",
-    "project_description":  "Description for project 608014287"
+  "portfolio_v2_info": {
+    "id": 624620001,
+    "project_description": 
+    "Description for project 624620001",
+    "upcoming_features": [
+      "Filtering options to portfolio items",
+      "Add \"Contact Me\" form",
+      "Clean up JavaScript code",
+      "Migrate off GitHub Pages"
+    ]
   },
+  "projects": [
     {
-    "id": 611512170,
-    "friendly_name": "Password Generator",
-    "project_description":  "Description for project 611512170"
-  },
+      "id": 604380778,
+      "friendly_name": "Code Refactor",
+      "project_description": 
+      "Description for project 604380778"
+    },
     {
-    "id": 614113443,
-    "friendly_name": "Code Quiz",
-    "project_description":  "Description for project 614113443"
-  },
+      "id": 608014287,
+      "friendly_name": "Portfolio v1",
+      "project_description": 
+      "Description for project 608014287"
+    },
     {
-    "id": 617164021,
-    "friendly_name": "Work Day Scheduler",
-    "project_description":  "Description for project 617164021"
-  },
+      "id": 611512170,
+      "friendly_name": "Password Generator",
+      "project_description": 
+      "Description for project 611512170"
+    },
     {
-    "id": 620517309,
-    "friendly_name": "Weather Dashboard",
-    "project_description":  "Description for project 620517309"
-  }
-]
+      "id": 614113443,
+      "friendly_name": "Code Quiz",
+      "project_description": 
+      "Description for project 614113443"
+    },
+    {
+      "id": 617164021,
+      "friendly_name": "Work Day Scheduler",
+      "project_description": 
+      "Description for project 617164021"
+    },
+    {
+      "id": 620517309,
+      "friendly_name": "Weather Dashboard",
+      "project_description": 
+      "Description for project 620517309"
+    }
+  ]
+}
