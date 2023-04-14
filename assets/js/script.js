@@ -6,9 +6,14 @@ const portfolioMetadataUrl = `https://api.github.com/repos/sergiorodriguezdev/po
 
 var myGhRepos = [];
 var portfolioData = [];
+var portfolioInfo = {};
+var aboutMe = {};
 
+var aboutMeDescription = document.getElementById("about-me-description");
 var portfolioDataDiv = document.querySelector("#portfolio-data .row");
 var projectDetailsModal = document.getElementById("project-details-modal");
+var portfolioInfoDescription = document.getElementById("portfolio-description");
+var portfolioInfoUpcoming = document.getElementById("portfolio-upcoming");
 
 // var easterEgg = document.querySelector(".btn.navbar-brand");
 // easterEgg.addEventListener("click", (event) => {
@@ -109,16 +114,19 @@ projectDetailsModal.addEventListener("show.bs.modal", (event) => {
     while(projectTopics.firstChild) projectTopics.removeChild(projectTopics.lastChild);
 
     for (const topic of project.topics) {
-        var liEl = document.createElement("li");
-        liEl.classList.add("list-group-item");
-        liEl.textContent = topic;
+        var spanEl = document.createElement("span");
+        spanEl.classList.add("badge");
+        spanEl.classList.add("rounded-pill");
+        spanEl.classList.add("text-bg-primary");
+        spanEl.textContent = topic;
 
-        projectTopics.append(liEl);
+        projectTopics.append(spanEl);
+        projectTopics.append("\n"); // have to add a line break for pills to be spaced horizontally
     }
 });
 
 function init() {
-    getRepoData();
+    // getRepoData();
 
     // portfolioData = JSON.parse(localStorage.getItem("portfolio-data"));
 
@@ -140,11 +148,18 @@ async function getRepoData() {
     });
     
 
-    // TO DO: fetch repo metadata (?) - unsure how I'm going to do this...
+    // fetch repo metadata JSON file
     var portfolioMetadata = await (fetchGithubData(portfolioMetadataUrl));
-    portfolioMetadata = atob(portfolioMetadata.content); //base64
+    portfolioMetadata = atob(portfolioMetadata.content); // Convert from base64
     portfolioMetadata = JSON.parse(portfolioMetadata);
-    console.log(portfolioMetadata)
+    // console.log(portfolioMetadata)
+
+    // add portfolio metadata to main dataset
+    aboutMe = portfolioMetadata.about_me;
+    portfolioInfo = portfolioMetadata.portfolio_v2_info;
+
+    console.log(aboutMe);
+    console.log(portfolioInfo);
     
     // For each "portfolio-worthy" repo,
     //  fetch screenshots stored in README-assets folder
@@ -166,7 +181,9 @@ async function getRepoData() {
         item.portfolio_metadata = portfolioMetadata.projects.filter((element) => element.id === item.id)[0];
     }
 
+    renderAboutMe();
     renderPortfolio();
+    renderPortfolioInfo();
     // localStorage.setItem("portfolio-data", JSON.stringify(portfolioData));
 }
 
@@ -292,10 +309,26 @@ function renderPortfolio() {
     }
 }
 
+function renderAboutMe() {
+    aboutMeDescription.textContent = aboutMe.description;
+}
+
+function renderPortfolioInfo() {
+    portfolioInfoDescription.textContent = portfolioInfo.project_description;
+
+    for (const item of portfolioInfo.upcoming_features) {
+        var liEl = document.createElement("li");
+        liEl.classList.add("list-group-item");
+        liEl.textContent = item;
+
+        portfolioInfoUpcoming.append(liEl);
+    }
+}
+
 async function fetchGithubData(url) {
     try {
         var response = await fetch(url, {
-            // cache: "reload",
+            // cache: "force-cache",
             headers: {
                 "X-GitHub-Api-Version": "2022-11-28"
             }
@@ -312,7 +345,11 @@ async function fetchGithubData(url) {
     return data;
 }
 
-init();
+function loadBootstrap() {
+    const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
+    const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
 
-const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
-const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
+}
+
+init();
+loadBootstrap();

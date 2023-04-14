@@ -19,6 +19,10 @@
         background-color: black;
 }
 
+.card-body:hover {
+        cursor: pointer;
+}
+
 .card-body:hover .modal-link {
         opacity: 0.75;
 }
