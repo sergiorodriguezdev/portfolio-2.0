@@ -2,9 +2,7 @@ const githubUsername = `sergiorodriguezdev`
 const githubScreenshotFolder = `README-assets`
 const githubReposUrl = `https://api.github.com/users/${githubUsername}/repos`
 const githubFolderUrl = `https://api.github.com/repos/${githubUsername}/{repositoryName}/contents/${githubScreenshotFolder}/`
-// const whatisthis = `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` // fix this!
-const whatisthis = `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`;
-const portfolioMetadataUrl = `https://api.github.com/repos/sergiorodriguezdev/portfolio-2.0/contents/assets/portfolio-metadata.json?ref=main`;
+const portfolioMetadataUrl = `https://api.github.com/repos/sergiorodriguezdev/portfolio-2.0/contents/assets/portfolio-metadata/portfolio-metadata.json?ref=main`;
 
 var myGhRepos = [];
 var portfolioData = [];
@@ -299,7 +297,6 @@ async function fetchGithubData(url) {
         var response = await fetch(url, {
             // cache: "reload",
             headers: {
-                "Authorization": "token " + whatisthis,
                 "X-GitHub-Api-Version": "2022-11-28"
             }
         });
