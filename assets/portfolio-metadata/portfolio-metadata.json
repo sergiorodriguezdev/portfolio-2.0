@@ -1,15 +1,13 @@
 {
   "about_me": {
-    "description": 
-    ""
+    "description": "Thank you for visiting my portfolio!\n\nMy name is Sergio, I have over 15 years of experience working in technology. I have always enjoyed writing code so I signed up for a web development bootcamp in 2023. This portfolio includes bootcamp related projects as well as personal projects I will be working on during my spare time.\n\nI do have previous experience writing code in my career. I was a Junior Developer and helped maintain code for an Electronic Medical Records Windows application written originally in Basic which we then ported to C#. The backend included a Microsoft SQL Server relational database where we stored data (both plain and encrypted) as well as BLOBs.\n\nI have also written automation scripts in VBScript, Batch, and some PowerShell to help support large scale software deployments in various industries. I have also tested, validated, and implemented integrations with multiple server side APIs to support software implementation deliverables and have worked with Production SQL databases writing queries and providing admin support.\n\nIn my spare time, I enjoy learning new technologies, watching soccer games, reading comics and watching anime, and playing the occasional video game.\n\nFeel free to connect with me via LinkedIn!"
   },
   "portfolio_v2_info": {
     "id": 624620001,
-    "project_description": 
-    "Description for project 624620001",
+    "project_description": "Although I recently created a Portfolio that I really like, I wanted to challenge myself and create a new one (hence v2.0) using Bootstrap. Additionally, I didn't want to update my portfolio manually by editing the HTML directly so I figured I would use the GitHub REST API to automatically populate the items in my portfolio.\n\nI started by organizing my GitHub repos in a way that would help me achieve my vision so I made sure the GitHub Pages URL was entered in the repo's About section. I also went through all repos and tagged them with the appropriate topics to help categorize my portfolio items. From here, I created a layout that I liked and added a modal to display the project details. Then, I connected to the GitHub API to automate the retrieval of the repo data. Finally, I added a navigation bar and other Bootstrap components, and made sure the design is responsive for a variety of display sizes.",
     "upcoming_features": [
-      "Filtering options to portfolio items",
-      "Add \"Contact Me\" form",
+      "Filtering options for Portfolio section",
+      "\"Contact Me\" form",
       "Clean up JavaScript code",
       "Migrate off GitHub Pages"
     ]
@@ -18,38 +16,32 @@
     {
       "id": 604380778,
       "friendly_name": "Code Refactor",
-      "project_description": 
-      "Description for project 604380778"
+      "project_description": "Description for project 604380778"
     },
     {
       "id": 608014287,
       "friendly_name": "Portfolio v1",
-      "project_description": 
-      "Description for project 608014287"
+      "project_description": "Description for project 608014287"
     },
     {
       "id": 611512170,
       "friendly_name": "Password Generator",
-      "project_description": 
-      "Description for project 611512170"
+      "project_description": "Description for project 611512170"
     },
     {
       "id": 614113443,
       "friendly_name": "Code Quiz",
-      "project_description": 
-      "Description for project 614113443"
+      "project_description": "Description for project 614113443"
     },
     {
       "id": 617164021,
       "friendly_name": "Work Day Scheduler",
-      "project_description": 
-      "Description for project 617164021"
+      "project_description": "Description for project 617164021"
     },
     {
       "id": 620517309,
       "friendly_name": "Weather Dashboard",
-      "project_description": 
-      "Description for project 620517309"
+      "project_description": "Description for project 620517309"
     }
   ]
 }
