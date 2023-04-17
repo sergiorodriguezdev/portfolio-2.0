@@ -15,6 +15,10 @@ var projectDetailsModal = document.getElementById("project-details-modal");
 var portfolioInfoDescription = document.getElementById("portfolio-description");
 var portfolioInfoUpcoming = document.getElementById("portfolio-upcoming");
 
+var screenshotThumbs = document.querySelectorAll(".screenshot-thumbnail");
+var screenshotLarge = document.getElementById("screenshot-large");
+
+
 // var easterEgg = document.querySelector(".btn.navbar-brand");
 // easterEgg.addEventListener("click", (event) => {
 //     var htmlEl = document.querySelector("html");
@@ -34,107 +38,18 @@ projectDetailsModal.addEventListener("show.bs.modal", (event) => {
     // find closest card element (div ancestor)
     var card = event.relatedTarget.closest(".card");
 
-    var findProject = function(arr, repoId) {
-        return (arr.filter((item) => item.id === repoId))[0]; // This should only return one result
-    };
-
-    var project = findProject(portfolioData, parseInt(card.dataset.repoId));
-    
-    var projectName = document.getElementById("project-name");
-    projectName.textContent = project.portfolio_metadata.friendly_name;
-
-    var projectGithubLink = document.getElementById("project-github-link");
-    projectGithubLink.setAttribute("href", project.html_url);
-
-    var projectAppLink = document.getElementById("project-app-link");
-    projectAppLink.setAttribute("href", project.homepage);
-
-    var screenshotsCollapsibleBtn = document.querySelector(".accordion-button");
-    screenshotsCollapsibleBtn.classList.add("collapsed");
-
-    var screenshotCollapsibleBody = document.querySelector(".accordion-collapse");
-    screenshotCollapsibleBody.classList.remove("show");
-
-    var projectScreenshotCarousel = document.getElementById("project-screenshot-carousel-inner");
-
-    // delete div child elements from carousel div element
-    while(projectScreenshotCarousel.firstChild) projectScreenshotCarousel.removeChild(projectScreenshotCarousel.lastChild);
-
-    if(!project.screenshots || project.screenshots.length === 0) {
-        var carouselItem = document.createElement("div");
-        carouselItem.classList.add("carousel-item");
-
-        var projectScreenshot = document.createElement("img");
-        projectScreenshot.setAttribute("src", "./assets/images/portfolio-placeholder.png");
-        projectScreenshot.setAttribute("alt", "portfolio-placeholder");
-        projectScreenshot.classList.add("d-block");
-        projectScreenshot.classList.add("w-100");
-
-        carouselItem.append(projectScreenshot);
-
-        projectScreenshotCarousel.append(carouselItem);
-    } else {
-        for (const screenshot of project.screenshots) {
-            var carouselItem = document.createElement("div");
-            carouselItem.classList.add("carousel-item");
-
-            var projectScreenshot = document.createElement("img");
-            projectScreenshot.setAttribute("src", screenshot.download_url);
-            projectScreenshot.setAttribute("alt", screenshot.name.replace(".png", ""));
-            projectScreenshot.classList.add("d-block");
-            projectScreenshot.classList.add("w-100");
-
-            carouselItem.append(projectScreenshot);
-
-            projectScreenshotCarousel.append(carouselItem);
-        }
-    }
-
-    // set the first carousel item as active (per bootstrap's example)
-    projectScreenshotCarousel.firstChild.classList.add("active");
-
-    var carouselPrevBtn = document.querySelector(".carousel-control-prev");
-    var carouselNextBtn = document.querySelector(".carousel-control-next");
-    
-    // hide carousel navigation buttons
-    if(projectScreenshotCarousel.children.length > 1) {
-        carouselPrevBtn.classList.remove("visually-hidden");
-        carouselNextBtn.classList.remove("visually-hidden");
-    } else {
-        carouselPrevBtn.classList.add("visually-hidden");
-        carouselNextBtn.classList.add("visually-hidden");
-    }
-
-    var projectDescription = document.getElementById("project-description");
-    projectDescription.textContent = project.portfolio_metadata.project_description;
-
-    var projectTopics = document.getElementById("project-topics")
-
-    // delete li child elements from ul element
-    while(projectTopics.firstChild) projectTopics.removeChild(projectTopics.lastChild);
-
-    for (const topic of project.topics) {
-        var spanEl = document.createElement("span");
-        spanEl.classList.add("badge");
-        spanEl.classList.add("rounded-pill");
-        spanEl.classList.add("text-bg-primary");
-        spanEl.textContent = topic;
-
-        projectTopics.append(spanEl);
-        projectTopics.append("\n"); // have to add a line break for pills to be spaced horizontally
-    }
+    populateProjectModal(parseInt(card.dataset.repoId));
 });
 
 function init() {
     // getRepoData();
 
-    // portfolioData = JSON.parse(localStorage.getItem("portfolio-data"));
-
-    // can this be improved...?
-    var timerIndex = setTimeout(() => {
-        // console.log(portfolioData)
-        // renderPortfolio();
-    }, 2000);
+    portfolioData = JSON.parse(localStorage.getItem("portfolio-data"));
+    portfolioInfo = JSON.parse(localStorage.getItem("portfolio-info"));
+    aboutMe = JSON.parse(localStorage.getItem("portfolio-about-me"));
+    renderAboutMe();
+    renderPortfolio();
+    renderPortfolioInfo();
 }
 
 async function getRepoData() {
@@ -185,6 +100,8 @@ async function getRepoData() {
     renderPortfolio();
     renderPortfolioInfo();
     // localStorage.setItem("portfolio-data", JSON.stringify(portfolioData));
+    // localStorage.setItem("portfolio-info", JSON.stringify(portfolioInfo));
+    // localStorage.setItem("portfolio-about-me", JSON.stringify(aboutMe));
 }
 
 function renderPortfolio() {
@@ -325,11 +242,174 @@ function renderPortfolioInfo() {
     }
 }
 
+function populateProjectModal(projectId) {
+    var findProject = function(arr, repoId) {
+        return (arr.filter((item) => item.id === repoId))[0]; // This should only return one result
+    };
+
+    var project = findProject(portfolioData, projectId);
+    
+    var projectName = document.getElementById("project-name");
+    projectName.textContent = project.portfolio_metadata.friendly_name;
+
+    var projectGithubLink = document.getElementById("project-github-link");
+    projectGithubLink.setAttribute("href", project.html_url);
+
+    var projectAppLink = document.getElementById("project-app-link");
+    projectAppLink.setAttribute("href", project.homepage);
+
+    // var screenshotsCollapsibleBtn = document.querySelector(".accordion-button");
+    // screenshotsCollapsibleBtn.classList.add("collapsed");
+
+    // var screenshotCollapsibleBody = document.querySelector(".accordion-collapse");
+    // screenshotCollapsibleBody.classList.remove("show");
+
+    var projectScreenshotCarousel = document.getElementById("project-screenshot-carousel-inner");
+    var carouselIndicator = document.getElementById("screenshot-indicators");
+
+    // delete div child elements from carousel div element
+    while(projectScreenshotCarousel.firstChild) projectScreenshotCarousel.removeChild(projectScreenshotCarousel.lastChild);
+
+    while(carouselIndicator.firstChild) carouselIndicator.removeChild(carouselIndicator.lastChild);
+
+
+    if(!project.screenshots || project.screenshots.length === 0) {
+        var carouselItem = document.createElement("div");
+        carouselItem.classList.add("carousel-item");
+
+
+        var projectScreenshot = document.createElement("img");
+        projectScreenshot.setAttribute("src", "./assets/images/portfolio-placeholder.png");
+        projectScreenshot.setAttribute("alt", "portfolio-placeholder");
+        // projectScreenshot.classList.add("d-block");
+        // projectScreenshot.classList.add("w-100");
+        // projectScreenshot.classList.add("img-fluid");
+
+        carouselItem.append(projectScreenshot);
+
+        projectScreenshotCarousel.append(carouselItem);
+    } else {
+        var carouselNavArr = [];
+        var i;
+        
+        for(i = 0; i < Math.ceil(project.screenshots.length / 4); i++) {
+            var carouselItem = document.createElement("div");
+            carouselItem.classList.add("carousel-item");
+
+            var carouselNav = document.createElement("div");
+
+            carouselNav.classList.add("row");
+            carouselNav.classList.add("row-cols-2");
+            carouselNav.classList.add("row-cols-lg-4");
+            carouselNav.classList.add("justify-content-evenly");
+            carouselNav.classList.add("g-3");
+
+            carouselItem.append(carouselNav);
+            projectScreenshotCarousel.append(carouselItem);
+
+            carouselNavArr.push(carouselNav);
+
+            var indicator = document.createElement("button");
+            indicator.setAttribute("type", "button");
+            indicator.setAttribute("data-bs-target", "#projects-screenshot-carousel");
+            indicator.setAttribute("data-bs-slide-to", i);
+            indicator.classList.add("bg-light");
+
+            carouselIndicator.append(indicator);
+
+            if (i === 0) {
+                carouselItem.classList.add("active");
+                indicator.classList.add("active");
+            }
+        }
+
+        // console.log(carouselNavArr[0].children)
+
+        i = 0;
+
+        // for (const screenshot of project.screenshots) {
+        for (var j = 0; j < project.screenshots.length; j++) {
+            // var carouselItem = document.createElement("div");
+            // carouselItem.classList.add("carousel-item");
+
+            var projectScreenshot = document.createElement("img");
+
+            projectScreenshot.setAttribute("src", project.screenshots[j].download_url);
+            projectScreenshot.setAttribute("alt", project.screenshots[j].name.replace(".png", ""));
+            projectScreenshot.classList.add("screenshot-thumbnail");
+            // projectScreenshot.classList.add("w-100");
+            // projectScreenshot.classList.add("img-fluid");
+            projectScreenshot.addEventListener("click", setScreenshotLarge);
+
+            carouselNavArr[Math.floor(j / 4)].append(projectScreenshot);
+
+            if (j === 0) {
+                screenshotLarge.setAttribute("src", project.screenshots[j].download_url);
+            }
+        }
+    }
+
+    // set the first carousel item as active (per bootstrap's example)
+    // projectScreenshotCarousel.firstChild.classList.add("active");
+
+    var carouselPrevBtn = document.getElementById("previous-button");
+    var carouselNextBtn = document.getElementById("next-button");
+    
+    
+    // hide carousel navigation buttons
+    if(project.screenshots && project.screenshots.length > 4) {
+        carouselPrevBtn.classList.remove("visually-hidden");
+        carouselNextBtn.classList.remove("visually-hidden");
+        carouselIndicator.classList.remove("visually-hidden");
+
+    } else {
+        carouselPrevBtn.classList.add("visually-hidden");
+        carouselNextBtn.classList.add("visually-hidden");
+        carouselIndicator.classList.add("visually-hidden");
+    }
+    if(project.screenshots && project.screenshots.length > 0) {
+        screenshotLarge.closest(".card").classList.remove("visually-hidden");
+        
+    } else {
+        screenshotLarge.closest(".card").classList.add("visually-hidden");
+
+
+    }
+
+    var projectDescription = document.getElementById("project-description");
+    projectDescription.textContent = project.portfolio_metadata.project_description;
+
+    var projectTopics = document.getElementById("project-topics");
+
+    // delete li child elements from ul element
+    while(projectTopics.firstChild) projectTopics.removeChild(projectTopics.lastChild);
+
+    for (const topic of project.topics) {
+        var spanEl = document.createElement("span");
+        spanEl.classList.add("badge");
+        spanEl.classList.add("rounded-pill");
+        spanEl.classList.add("text-bg-primary");
+        spanEl.classList.add("text-wrap");
+        spanEl.textContent = topic;
+
+        projectTopics.append(spanEl);
+        projectTopics.append("\n"); // have to add a line break for pills to be spaced horizontally
+    }
+}
+
+function setScreenshotLarge(event) {
+    event.preventDefault();
+
+    var imgUrl = event.target.getAttribute("src");
+    screenshotLarge.setAttribute("src", imgUrl);
+}
+
 async function fetchGithubData(url) {
     try {
         var response = await fetch(url, {
-            // cache: "force-cache",
+            cache: "force-cache",
             headers: {
+                "Authorization": "Bearer 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",
                 "X-GitHub-Api-Version": "2022-11-28"
             }
         });

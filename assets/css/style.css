@@ -19,7 +19,7 @@
         background-color: black;
 }
 
-.card-body:hover {
+.card[data-repo-id] > .card-body:hover {
         cursor: pointer;
 }
 
@@ -36,18 +36,28 @@
         transform: translate(-50%, -50%);
         /* text-align: center; */
 }
+/* --------------- */
 
-/* loading spinner size */
+/* Loading spinner size */
 #loading-spinner .spinner-border {
         width: 5rem;
         height: 5rem;
 }
 
-/* 
+/* Project screenshot nav thumbnails */
+.screenshot-thumbnail {
+        /* width: 100px; */
+        height: 100px;
+        object-fit: cover;
+        cursor: pointer;
+        /* border: thin solid white; */
+}
+
+/* Main nav links behavior */
 .nav-link:hover .nav-link-text {
         text-decoration: underline;
 }
 
 .nav-link.active .nav-link-text {
         text-decoration: underline;
-} */
+}
