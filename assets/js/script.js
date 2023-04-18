@@ -42,20 +42,22 @@ projectDetailsModal.addEventListener("show.bs.modal", (event) => {
 });
 
 function init() {
-    // getRepoData();
+    getRepoData();
 
-    portfolioData = JSON.parse(localStorage.getItem("portfolio-data"));
-    portfolioInfo = JSON.parse(localStorage.getItem("portfolio-info"));
-    aboutMe = JSON.parse(localStorage.getItem("portfolio-about-me"));
-    renderAboutMe();
-    renderPortfolio();
-    renderPortfolioInfo();
+    // portfolioData = JSON.parse(localStorage.getItem("portfolio-data"));
+    // portfolioInfo = JSON.parse(localStorage.getItem("portfolio-info"));
+    // aboutMe = JSON.parse(localStorage.getItem("portfolio-about-me"));
+
+    // renderAboutMe();
+    // renderPortfolio();
+    // renderPortfolioInfo();
 }
 
 async function getRepoData() {
 
     // Fetch all my GH repos
     myGhRepos = await (fetchGithubData(githubReposUrl));
+    console.log(myGhRepos)
 
     // Filter out repos to build portfolio dataset
     portfolioData = myGhRepos.filter((el) => {
@@ -67,14 +69,12 @@ async function getRepoData() {
     var portfolioMetadata = await (fetchGithubData(portfolioMetadataUrl));
     portfolioMetadata = atob(portfolioMetadata.content); // Convert from base64
     portfolioMetadata = JSON.parse(portfolioMetadata);
-    // console.log(portfolioMetadata)
+    console.log(portfolioMetadata)
 
     // add portfolio metadata to main dataset
     aboutMe = portfolioMetadata.about_me;
     portfolioInfo = portfolioMetadata.portfolio_v2_info;
-
-    console.log(aboutMe);
-    console.log(portfolioInfo);
+    console.log(portfolioInfo)
     
     // For each "portfolio-worthy" repo,
     //  fetch screenshots stored in README-assets folder
@@ -227,11 +227,11 @@ function renderPortfolio() {
 }
 
 function renderAboutMe() {
-    aboutMeDescription.textContent = aboutMe.description;
+    aboutMeDescription.innerText = aboutMe.description; // used innerText to support new line chars coming from JSON
 }
 
 function renderPortfolioInfo() {
-    portfolioInfoDescription.textContent = portfolioInfo.project_description;
+    portfolioInfoDescription.innerText = portfolioInfo.project_description; // used innerText to support new line chars coming from JSON
 
     for (const item of portfolioInfo.upcoming_features) {
         var liEl = document.createElement("li");
@@ -377,7 +377,7 @@ function populateProjectModal(projectId) {
     }
 
     var projectDescription = document.getElementById("project-description");
-    projectDescription.textContent = project.portfolio_metadata.project_description;
+    projectDescription.innerText = project.portfolio_metadata.project_description; // used innerText to support new line chars coming from JSON
 
     var projectTopics = document.getElementById("project-topics");
 
@@ -407,9 +407,9 @@ function setScreenshotLarge(event) {
 async function fetchGithubData(url) {
     try {
         var response = await fetch(url, {
-            cache: "force-cache",
+            // cache: "force-cache",
             headers: {
-                "Authorization": "Bearer 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",
+                "Authorization": "Bearer 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",
                 "X-GitHub-Api-Version": "2022-11-28"
             }
         });
