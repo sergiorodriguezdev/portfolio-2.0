@@ -42,7 +42,7 @@
       "id": 620517309,
       "friendly_name": "Weather Dashboard",
       "project_description": "I was tasked with creating a weather dashboard using data from the OpenWeather API; I leverage their Geocoding and 5 Day / 3 Hour Forecast APIs to accomplish this. This was my first project using the Fetch JavaScript API.\n\nI wasn't provided with any starter code this time so I wrote the HTML from scratch and my goal was to use Bootstrap so I could become more comfortable with it. It took me a long time to get the styling just right but it was overall a very good experience."
-    }
+    },
     {
       "id": 629738631,
       "friendly_name": "",
