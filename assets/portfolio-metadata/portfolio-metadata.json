@@ -4,44 +4,44 @@
   },
   "portfolio_v2_info": {
     "id": 624620001,
-    "project_description": "Although I recently created a Portfolio that I really like, I wanted to challenge myself and create a new one (hence v2.0) using Bootstrap. Additionally, I didn't want to update my portfolio manually by editing the HTML directly so I figured I would use the GitHub REST API to automatically populate the items in my portfolio.\n\nI started by organizing my GitHub repos in a way that would help me achieve my vision so I made sure the GitHub Pages URL was entered in the repo's About section. I also went through all repos and tagged them with the appropriate topics to help categorize my portfolio items. From here, I created a layout that I liked and added a modal to display the project details. Then, I connected to the GitHub API to automate the retrieval of the repo data. Finally, I added a navigation bar and other Bootstrap components, and made sure the design is responsive for a variety of display sizes.",
+    "project_description": "Although I recently created a Portfolio that I really like, I wanted to challenge myself and create a new one (hence v2.0) using Bootstrap. Additionally, I didn't want to update my portfolio manually by editing the HTML directly so I figured I would use the GitHub REST API to automatically populate the items in my portfolio from their corresponding GitHub repositories.\n\nI started by organizing my GitHub repos in a way that would help me achieve my vision so I made sure the GitHub Pages URL was entered in the repo's About section. I also went through all repos and tagged them with the appropriate topics to help categorize my portfolio items. From here, I created a layout that I liked and added a modal to display the project details. Then, I connected to the GitHub API to automate the retrieval of the repo data. Finally, I added a navigation bar and other Bootstrap components, and made sure the design is responsive for a variety of display sizes.",
     "upcoming_features": [
       "Filtering options for Portfolio section",
-      "\"Contact Me\" form",
-      "Clean up JavaScript code",
-      "Migrate off GitHub Pages"
+      "Drastically improve JavaScript code",
+      "Migrate off GitHub Pages",
+      "\"Contact Me\" form"  
     ]
   },
   "projects": [
     {
       "id": 604380778,
       "friendly_name": "Code Refactor",
-      "project_description": "Description for project 604380778"
+      "project_description": "I was provided with starter code and had to replace HTML elements with HTML Semantic Elements where it made sense. Additionally, the provided CSS had to be updated so the selectors match the element names, Class and ID values. The goal was to have a functional web app and not modify the design and layout. The design isn't responsive but it's an item that can be improved."
     },
     {
       "id": 608014287,
       "friendly_name": "Portfolio v1",
-      "project_description": "Description for project 608014287"
+      "project_description": "This is the first version of my portfolio. The design is responsive so the layout adjusts as the screen size changes. This project was CSS heavy and I got the chance to experiment with a lot of CSS properties.\n\nThe items in the portfolio have to be updated manually, unfortunately, but I am very happy with how it turned out. The macOS Terminal layout came to me when I was almost finished with the requirements; I spent a lot of time making the necessary adjustments to make it look just right and it was fun to see the progress."
     },
     {
       "id": 611512170,
       "friendly_name": "Password Generator",
-      "project_description": "Description for project 611512170"
+      "project_description": "The starter code provided included all HTML elements and CSS selectors. The goal was to use JavaScript to create an app responsive to user input to generate a complex password. I included a lot of validation steps to prevent the user from entering incorrect parameters and to ensure the generated password met the criteria entered by the user.\n\nHaving worked with password generators in the past, I noticed the app was missing a \"Copy to Clipboard\" button so I decided to add this feature - I think the end user would appreciate features that improve the overall UX."
     },
     {
       "id": 614113443,
       "friendly_name": "Code Quiz",
-      "project_description": "Description for project 614113443"
+      "project_description": "The goal of this project was to create a quiz by manipulating the DOM and dynamically creating HTML elements. It is a timed quiz and the high scores are saved in the browser's Local Storage. A timed interval is triggered when the quiz starts and the end user is penalized with each incorrect answer.\n\nI didn't want the questions to always be presented in the same order so I wrote a function that shuffles the array of questions."
     },
     {
       "id": 617164021,
       "friendly_name": "Work Day Scheduler",
-      "project_description": "Description for project 617164021"
+      "project_description": "This project uses jQuery to traverse the DOM and dynamically create HTML elements; I also used event delegation in jQuery to handle click events on the multiple Save buttons available in the UI. The Day.js third party library is used to work with Date-Time values and the data is saved to the browser's Local Storage.\n\nThe HTML and CSS were provided to me which I used as a guide to write the \"createHTML\" function in my JavaScript code; this is the function that generates the empty time slots in the daily scheduler. This was my first exposure to Bootstrap and it was really interesting to see the types of interfaces you can create with it."
     },
     {
       "id": 620517309,
       "friendly_name": "Weather Dashboard",
-      "project_description": "Description for project 620517309"
+      "project_description": "I was tasked with creating a weather dashboard using data from the OpenWeather API; I leverage their Geocoding and 5 Day / 3 Hour Forecast APIs to accomplish this. This was my first project using the Fetch JavaScript API.\n\nI wasn't provided with any starter code this time so I wrote the HTML from scratch and my goal was to use Bootstrap so I could become more comfortable with it. It took me a long time to get the styling just right but it was overall a very good experience."
     }
   ]
 }
