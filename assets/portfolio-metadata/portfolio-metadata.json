@@ -45,8 +45,8 @@
     },
     {
       "id": 629738631,
-      "friendly_name": "",
-      "project_description": ""
+      "friendly_name": "Recipe + Cocktail Generator",
+      "project_description": "The requirements were to use two server side APIs and a CSS framework other than Bootstrap but we were free to come up with a unique idea for our app. We picked the Edamam and thecocktaildb APIs, and Materialize. The app takes user input that triggers requests to the different APIs and presents the results (a list of recipes and cocktails) to the user. From here, the user can add results to their favorites which they can manage via a modal.\n\nMy primary responsibility was to create the \"Favorites\" modal and populate it with data stored in the browser's Local Storage, and create functionality to delete any items from the user's favorites. However, I also helped compile and debug the code that each of us was working on separately. This was the first time using git and GitHub in a team setting so I had the opportunity to learn a lot about the GitHub Workflow and resolving conflicts while approving PRs."
     }
   ]
 }
