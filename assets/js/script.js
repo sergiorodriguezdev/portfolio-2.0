@@ -33,7 +33,7 @@ var screenshotLarge = document.getElementById("screenshot-large");
 // Populate modal
 projectDetailsModal.addEventListener("show.bs.modal", (event) => {
     event.stopPropagation();
-    
+
     // relatedTarget = link/button that opened modal
     // find closest card element (div ancestor)
     var card = event.relatedTarget.closest(".card");
@@ -55,16 +55,6 @@ function init() {
 
 async function getRepoData() {
 
-    // Fetch all my GH repos
-    myGhRepos = await (fetchGithubData(githubReposUrl));
-    console.log(myGhRepos)
-
-    // Filter out repos to build portfolio dataset
-    portfolioData = myGhRepos.filter((el) => {
-        return el.has_pages && el.homepage && el.name !== "portfolio-2.0";
-    });
-    
-
     // fetch repo metadata JSON file
     var portfolioMetadata = await (fetchGithubData(portfolioMetadataUrl));
     portfolioMetadata = atob(portfolioMetadata.content); // Convert from base64
@@ -75,16 +65,28 @@ async function getRepoData() {
     aboutMe = portfolioMetadata.about_me;
     portfolioInfo = portfolioMetadata.portfolio_v2_info;
     console.log(portfolioInfo)
-    
+
+    renderAboutMe();
+    renderPortfolioInfo();
+
+    // Fetch all my GH repos
+    myGhRepos = await (fetchGithubData(githubReposUrl));
+    console.log(myGhRepos)
+
+    // Filter out repos to build portfolio dataset
+    portfolioData = myGhRepos.filter((el) => {
+        return el.has_pages && el.homepage && el.name !== "portfolio-2.0";
+    });
+
     // For each "portfolio-worthy" repo,
     //  fetch screenshots stored in README-assets folder
-    for(const item of portfolioData) {
+    for (const item of portfolioData) {
         var screenshotFolderUrl = githubFolderUrl.replace("{repositoryName}", item.name);
         var screenshots = await (fetchGithubData(screenshotFolderUrl));
 
         if (screenshots !== null) {
             item.screenshots = [];
-            for(const screenshot of screenshots) {
+            for (const screenshot of screenshots) {
                 // Only add PNG files found in README-assets folder to portfolio dataset
                 if (screenshot.name.match(/\.png$/)) {
                     item.screenshots.push(screenshot);
@@ -95,10 +97,9 @@ async function getRepoData() {
         // add portfolio metadata to main dataset
         item.portfolio_metadata = portfolioMetadata.projects.filter((element) => element.id === item.id)[0];
     }
-
-    renderAboutMe();
+    
     renderPortfolio();
-    renderPortfolioInfo();
+    
     // localStorage.setItem("portfolio-data", JSON.stringify(portfolioData));
     // localStorage.setItem("portfolio-info", JSON.stringify(portfolioInfo));
     // localStorage.setItem("portfolio-about-me", JSON.stringify(aboutMe));
@@ -109,11 +110,11 @@ function renderPortfolio() {
     var loadingSpinner = document.getElementById("loading-spinner");
     loadingSpinner.remove();
 
-    for(const item of portfolioData) {
-
+    for (const item of portfolioData) {
+        console.log(item.name)
         var col = document.createElement("div");
         col.classList.add("col");
-    
+
         var card = document.createElement("div");
         card.classList.add("card");
         card.classList.add("h-100");
@@ -125,10 +126,11 @@ function renderPortfolio() {
 
         var image = document.createElement("img");
         image.style.objectFit = "cover";
-        image.classList.add("img-thumbnail");
+        // image.classList.add("img-thumbnail");
         image.classList.add("h-100");
+        image.classList.add("w-100");
 
-        if(item.screenshots) {
+        if (item.screenshots) {
             image.setAttribute("src", item.screenshots[0].download_url);
         } else {
             image.setAttribute("src", "./assets/images/portfolio-placeholder.png");
@@ -151,7 +153,7 @@ function renderPortfolio() {
 
         var cardFooter = document.createElement("div");
         cardFooter.classList.add("card-footer");
-    
+
         var repoName = document.createElement("small");
         repoName.classList.add("text-body-secondary");
         repoName.textContent = ` ${item.portfolio_metadata.friendly_name}`;
@@ -213,15 +215,15 @@ function renderPortfolio() {
         btnGroup.append(linkGitHub);
         btnGroup.append(linkApp);
         btnGroup.append(modalSpan);
-    
+
         cardFooter.append(repoName);
         cardFooter.append(document.createElement("br"));
         cardFooter.append(btnGroup);
-    
+
         card.append(cardBody);
         card.append(cardFooter);
         col.append(card);
-    
+
         portfolioDataDiv.append(col);
     }
 }
@@ -243,12 +245,12 @@ function renderPortfolioInfo() {
 }
 
 function populateProjectModal(projectId) {
-    var findProject = function(arr, repoId) {
+    var findProject = function (arr, repoId) {
         return (arr.filter((item) => item.id === repoId))[0]; // This should only return one result
     };
 
     var project = findProject(portfolioData, projectId);
-    
+
     var projectName = document.getElementById("project-name");
     projectName.textContent = project.portfolio_metadata.friendly_name;
 
@@ -268,12 +270,12 @@ function populateProjectModal(projectId) {
     var carouselIndicator = document.getElementById("screenshot-indicators");
 
     // delete div child elements from carousel div element
-    while(projectScreenshotCarousel.firstChild) projectScreenshotCarousel.removeChild(projectScreenshotCarousel.lastChild);
+    while (projectScreenshotCarousel.firstChild) projectScreenshotCarousel.removeChild(projectScreenshotCarousel.lastChild);
 
-    while(carouselIndicator.firstChild) carouselIndicator.removeChild(carouselIndicator.lastChild);
+    while (carouselIndicator.firstChild) carouselIndicator.removeChild(carouselIndicator.lastChild);
 
 
-    if(!project.screenshots || project.screenshots.length === 0) {
+    if (!project.screenshots || project.screenshots.length === 0) {
         var carouselItem = document.createElement("div");
         carouselItem.classList.add("carousel-item");
 
@@ -291,8 +293,8 @@ function populateProjectModal(projectId) {
     } else {
         var carouselNavArr = [];
         var i;
-        
-        for(i = 0; i < Math.ceil(project.screenshots.length / 4); i++) {
+
+        for (i = 0; i < Math.ceil(project.screenshots.length / 4); i++) {
             var carouselItem = document.createElement("div");
             carouselItem.classList.add("carousel-item");
 
@@ -325,8 +327,6 @@ function populateProjectModal(projectId) {
 
         // console.log(carouselNavArr[0].children)
 
-        i = 0;
-
         // for (const screenshot of project.screenshots) {
         for (var j = 0; j < project.screenshots.length; j++) {
             // var carouselItem = document.createElement("div");
@@ -354,10 +354,10 @@ function populateProjectModal(projectId) {
 
     var carouselPrevBtn = document.getElementById("previous-button");
     var carouselNextBtn = document.getElementById("next-button");
-    
-    
+
+
     // hide carousel navigation buttons
-    if(project.screenshots && project.screenshots.length > 4) {
+    if (project.screenshots && project.screenshots.length > 4) {
         carouselPrevBtn.classList.remove("visually-hidden");
         carouselNextBtn.classList.remove("visually-hidden");
         carouselIndicator.classList.remove("visually-hidden");
@@ -367,9 +367,9 @@ function populateProjectModal(projectId) {
         carouselNextBtn.classList.add("visually-hidden");
         carouselIndicator.classList.add("visually-hidden");
     }
-    if(project.screenshots && project.screenshots.length > 0) {
+    if (project.screenshots && project.screenshots.length > 0) {
         screenshotLarge.closest(".card").classList.remove("visually-hidden");
-        
+
     } else {
         screenshotLarge.closest(".card").classList.add("visually-hidden");
 
@@ -382,7 +382,7 @@ function populateProjectModal(projectId) {
     var projectTopics = document.getElementById("project-topics");
 
     // delete li child elements from ul element
-    while(projectTopics.firstChild) projectTopics.removeChild(projectTopics.lastChild);
+    while (projectTopics.firstChild) projectTopics.removeChild(projectTopics.lastChild);
 
     for (const topic of project.topics) {
         var spanEl = document.createElement("span");
@@ -409,12 +409,12 @@ async function fetchGithubData(url) {
         var response = await fetch(url, {
             // cache: "force-cache",
             headers: {
-                "Authorization": "Bearer " + atob("Z2hwX2lNajhMNWdKVDhja2JOQ3pQck5OYmNtdkFKVllpZjRHSGVYMA=="),
+                "Authorization": "Bearer " + atob("Z2hwX1pwUkNBTWZraDBuU3NQY1d5aktkU3dIdjdZSndMbDRJVVZrTw=="),
                 "X-GitHub-Api-Version": "2022-11-28"
             }
         });
-        
-        if (!response.ok) {return null}
+
+        if (!response.ok) { return null }
 
         var data = await response.json();
     } catch (error) {
@@ -425,11 +425,11 @@ async function fetchGithubData(url) {
     return data;
 }
 
-function loadBootstrap() {
+function loadBootstrapComponents() {
     const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
     const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
 
 }
 
 init();
-loadBootstrap();
+loadBootstrapComponents();

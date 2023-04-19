@@ -17,7 +17,7 @@
 
   <header>
     <!-- nav option 1 -->
-    <nav class="navbar sticky-top navbar-expand-lg bg-body-tertiary">
+    <nav class="navbar fixed-top navbar-expand-lg bg-body-tertiary">
       <div class="container-fluid">
         <div class="d-flex">
           <button class="btn navbar-brand">
@@ -40,24 +40,24 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="nav nav-tabs border-0 d-flex flex-column flex-lg-row justify-content-start" id="myTab"
             role="tablist">
-            <li class="nav-item offset-1 offset-lg-0">
+            <li class="nav-item offset-1 offset-lg-0" data-bs-toggle="collapse" data-bs-target=".navbar-collapse.collapse.show">
               <button class="nav-link border-0 text-light active" id="about-me-tab" data-bs-toggle="tab"
                 data-bs-target="#about-me" type="button" role="tab" aria-controls="about-me" aria-selected="true">
-                <i class="bi bi-caret-right-fill"></i> <i class="bi bi-folder"></i> <span class="nav-link-text">Sergio
+                <i class="bi bi-chevron-right d-none d-lg-inline"></i><i class="bi bi-arrow-return-right d-inline d-lg-none"></i> <i class="bi bi-folder"></i> <span class="nav-link-text">Sergio
                   Rodriguez</span>
               </button>
             </li>
-            <li class="nav-item offset-2 offset-lg-0">
+            <li class="nav-item offset-2 offset-lg-0" data-bs-toggle="collapse" data-bs-target=".navbar-collapse.collapse.show">
               <button class="nav-link border-0 text-light" id="portfolio-tab" data-bs-toggle="tab"
                 data-bs-target="#portfolio" type="button" role="tab" aria-controls="portfolio" aria-selected="true">
-                <i class="bi bi-caret-right-fill"></i> <i class="bi bi-folder"></i> <span
+                <i class="bi bi-chevron-right d-none d-lg-inline"></i><i class="bi bi-arrow-return-right d-inline d-lg-none"></i> <i class="bi bi-folder"></i> <span
                   class="nav-link-text">Portfolio</span>
               </button>
             </li>
-            <li class="nav-item offset-3 offset-lg-0">
+            <li class="nav-item offset-3 offset-lg-0" data-bs-toggle="collapse" data-bs-target=".navbar-collapse.collapse.show">
               <button class="nav-link border-0 text-light" id="v2-info-tab" data-bs-toggle="tab"
                 data-bs-target="#v2-info" type="button" role="tab" aria-controls="v2-info" aria-selected="true">
-                <i class="bi bi-caret-right-fill"></i> <i class="bi bi-folder"></i> <span
+                <i class="bi bi-chevron-right d-none d-lg-inline"></i><i class="bi bi-arrow-return-right d-inline d-lg-none"></i> <i class="bi bi-folder"></i> <span
                   class="nav-link-text">v2.0</span>
               </button>
             </li>
@@ -68,7 +68,8 @@
   </header>
 
   <main>
-    <div class="tab-content my-4">
+    <div class="py-5"></div>
+    <div class="tab-content">
       <div class="tab-pane show active" id="about-me" role="tabpanel" aria-labelledby="about-me" tabindex="0">
         <div class="container">
           <div class="row">
@@ -80,8 +81,7 @@
                     class="col-12 col-lg-3 d-flex flex-column flex-wrap justify-content-center align-items-center my-3">
                     <figure class="figure">
                       <img src="./assets/images/headshot.png" class="img-fluid rounded m-auto bg-body-secondary bg-gradient" alt="">
-                      <!-- <figcaption class="figure-caption text-center">I don't have a recent headshot at the moment but
-                        here's my Memoji!</figcaption> -->
+                      <!-- <figcaption class="figure-caption text-center"></figcaption> -->
                     </figure>
                     <div class="">
                       <a class="btn btn-sm btn-light" href="https://github.com/sergiorodriguezdev" role="button"
@@ -220,11 +220,11 @@
         </div>
       </div>
     </div>
+    <div class="py-5"></div>
   </main>
 
   <!-- Footer -->
-  <footer class="text-center">
-    <div class="container-fluid p-4"></div>
+  <footer class="fixed-bottom text-center">
     <div class="container-fluid bg-body-tertiary p-2">
       © 2023 Copyright: Sergio Rodriguez
     </div>
@@ -419,6 +419,7 @@
                       </div>
 
                     </div>
+                    <hr>
                     <div class="row justify-content-center">
                       <img id="screenshot-large"
                         src=""
