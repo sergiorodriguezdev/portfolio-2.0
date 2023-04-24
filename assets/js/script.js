@@ -59,19 +59,19 @@ async function getRepoData() {
     var portfolioMetadata = await (fetchGithubData(portfolioMetadataUrl));
     portfolioMetadata = atob(portfolioMetadata.content); // Convert from base64
     portfolioMetadata = JSON.parse(portfolioMetadata);
-    console.log(portfolioMetadata)
+    // console.log(portfolioMetadata)
 
     // add portfolio metadata to main dataset
     aboutMe = portfolioMetadata.about_me;
     portfolioInfo = portfolioMetadata.portfolio_v2_info;
-    console.log(portfolioInfo)
+    // console.log(portfolioInfo)
 
     renderAboutMe();
     renderPortfolioInfo();
 
     // Fetch all my GH repos
     myGhRepos = await (fetchGithubData(githubReposUrl));
-    console.log(myGhRepos)
+    // console.log(myGhRepos)
 
     // Filter out repos to build portfolio dataset
     portfolioData = myGhRepos.filter((el) => {
@@ -111,7 +111,7 @@ function renderPortfolio() {
     loadingSpinner.remove();
 
     for (const item of portfolioData) {
-        console.log(item.name)
+        // console.log(item.name)
         var col = document.createElement("div");
         col.classList.add("col");
 
