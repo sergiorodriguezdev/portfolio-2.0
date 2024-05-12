@@ -409,7 +409,7 @@ async function fetchGithubData(url) {
         var response = await fetch(url, {
             // cache: "force-cache",
             headers: {
-                "Authorization": "Bearer " + atob("Z2hwX1pwUkNBTWZraDBuU3NQY1d5aktkU3dIdjdZSndMbDRJVVZrTw=="),
+                "Authorization": "Bearer " + atob("Z2hwX05vMm5TR1JBTkR1V3dJMkFHamV4d1VqVlptRWdsSDNWSEM0Qg=="),
                 "X-GitHub-Api-Version": "2022-11-28"
             }
         });
